@@ -1,23 +1,21 @@
-/* global jQuery */
+/*global window, document */
 
-(function ($) {
-    var $window = $(window),
-        $html,
+(function () {
+    'use strict';
+
+    var html = document.getElementsByTagName('html')[0],
         getVmin = function () {
-            var width = $window.width(),
-                height = $window.height(),
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
                 min = Math.min(width, height);
-
             return min * 0.01;
         },
         setFontSize = function () {
-            $html.css('font-size', getVmin() + 'px');
+            html.style.fontSize = getVmin() + 'px';
         };
-    $(function () {
-        $html = $('html');
+    
+    setFontSize();
 
-        $window.on('resize orientationchange', setFontSize);
-
-        setFontSize();
-    });
-}(jQuery));
+    window.addEventListener('orientationchange', setFontSize);
+    window.addEventListener('resize', setFontSize);
+}());
